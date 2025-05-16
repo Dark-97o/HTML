@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://lh3.googleusercontent.com/pw/AP1GczPEyErGJ4vjrf7gb5324t1c65OwcS4IkrqBdCrKP1u7nRD2q9_RCLBHQaVjmZ3l50DmY6gIfEA3lGGPvLDDBQDmHb1Xi_WdEgkja5O3khKlFjxVBz29WB2_rysGQ_j-MWtB1tDHqDFNb-K1QFcSOtum=w725-h725-s-no-gm?authuser=3" type="image/png">
+    <title>UEMJ Shadow Market</title>
+    <style>
+        /* Global Styles */
+            @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #00ffff;
+            --primary-dark: #00cccc;
+            --secondary-color: #121212;
+            --text-color: #ffffff;
+            --accent-color: #0bd1b3;
+            --card-bg: rgba(0, 0, 0, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Animation Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .cube {
+            position: absolute;
+            border: 1px solid var(--primary-color);
+            opacity: 0.2;
+            animation: cubeAnimation 20s linear infinite;
+        }
+
+        @keyframes cubeAnimation {
+            0% {
+                transform: rotate(0deg) translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: rotate(360deg) translateY(1000px) translateX(500px);
+                opacity: 0;
+            }
+        }
+        
+        /* Grid Lines */
+        .grid {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .grid:before, .grid:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(var(--primary-color) 0.5px, transparent 0.5px);
+            background-size: 100% 30px;
+            opacity: 0.1;
+        }
+        
+        .grid:after {
+            transform: rotate(90deg);
+        }
+        
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary-color);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 80px;
+            height: 80px;
+            margin-right: 1px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 1000px;
+            padding: 0px;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+            border: none;
+            border-radius: 30px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin: -30px auto 50px;
+            max-width: 700px;
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+        
+        /* News Section */
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .news-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .news-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .news-excerpt {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .read-more:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .read-more:hover:after {
+            width: 100%;
+        }
+        
+        /* Events Section */
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .event-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .event-content {
+            padding: 20px;
+        }
+        
+        .event-date {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .event-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .event-excerpt {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        /* Services Section */
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-box {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .service-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .service-box h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .service-box p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .price-tag {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: auto;
+        }
+        
+        .price-tag p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Tabs for Services */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary-dark);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Projects Section */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .project-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .project-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .project-description {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .project-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .status-available {
+            background-color: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+        }
+        
+        .status-rented {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+        
+        .status-sold {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ff3333;
+        }
+                
+        .project-price {
+            margin-top: auto;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* Question Bank Section */
+        .question-bank-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .question-bank-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .question-bank-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .question-bank-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .question-bank-card p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .semester-select {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-dark);
+            border-radius: 5px;
+            color: var(--text-color);
+            width: 100%;
+        }
+        
+        .semester-select option {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .department-select {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-dark);
+            border-radius: 5px;
+            color: var(--text-color);
+            width: 100%;
+        }
+        
+        .department-select option {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        
+        /* Join Team Section */
+        .join-team {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .join-team:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), transparent);
+        }
+        
+        .join-team .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Request Notes Section */
+        .request-notes {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid var(--primary-dark);
+        }
+        
+        /* Emergency Supplies Section */
+        .emergency-supplies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .emergency-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .emergency-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .emergency-card img {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .emergency-actions {
+            margin-top: 15px;
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            padding: 50px 0 20px;
+            border-top: 1px solid var(--primary-dark);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links h4 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            nav {
+                position: fixed;
+                right: 0;
+                top: 0;
+                height: 100vh;
+                width: 70%;
+                background: rgba(0, 0, 0, 0.95);
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-left: 1px solid var(--primary-color);
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                z-index: 1001;
+            }
+            
+            .nav-active {
+                transform: translateX(0%);
+            }
+            
+            .mobile-menu.toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .mobile-menu.toggle .line2 {
+                opacity: 0;
+            }
+            
+            .mobile-menu.toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }  
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background">
+        <div class="grid"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="UEM Shadow Market Logo">
+                <div class="logo-text">USM</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="https://dark-97o.github.io/news.html">News</a></li>
+                    <li><a href="https://dark-97o.github.io/service.html">Services</a></li>
+                    <li><a href="https://dark-97o.github.io/project.html">Projects</a></li>
+                    <li><a href="https://dark-97o.github.io/question.html">Question Bank</a></li>
+                    <li><a href="https://dark-97o.github.io/internship.html">Internships</a></li>
+                    <li><a href="https://dark-97o.github.io/join.html">Join Team</a></li>
+
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </header>
+<!-- Add this code right after the header section in your HTML -->
+<div class="top-buyer-banner">
+    <div class="top-buyer-content">
+        <span class="top-buyer-label">🏆 TOP BUYER THIS MONTH:</span>
+        <span class="top-buyer-name">MAUSIKTA KHETO</span>
+        <span class="top-buyer-stats">• 1 PURCHASES • 50₹ SPENT •</span>
+        <span class="top-buyer-label">🔥 PREMIUM MEMBER </span>
+        <span class="top-buyer-name">MAUSIKTA KHETO</span>
+        <span class="top-buyer-stats">• VIP ACCESS • PRIORITY ORDERS •</span>
+    </div>
+</div>
+
+<!-- Add this CSS to your style section -->
+<style>
+    .top-buyer-banner {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 20, 20, 0.9), rgba(0, 0, 0, 0.8));
+        border-top: 1px solid var(--primary-color);
+        border-bottom: 1px solid var(--primary-color);
+        overflow: hidden;
+        position: fixed;
+        top: 100px;
+        left: 0;
+        width: 100%;
+        z-index: 99;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    }
+
+    .top-buyer-content {
+        white-space: nowrap;
+        display: inline-block;
+        padding: 8px 0;
+        animation: scrollText 15s linear infinite;
+        font-size: 13px;
+    }
+
+    .top-buyer-label {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin: 0 15px;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+    }
+
+    .top-buyer-name {
+        color: white;
+        font-weight: 600;
+        margin-right: 10px;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+    }
+
+    .top-buyer-stats {
+        color: rgba(255, 255, 255, 0.9);
+        font-style: italic;
+        font-weight: 500;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        margin-right: 20px;
+    }
+
+    @keyframes scrollText {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* Responsive adjustments for mobile */
+    @media screen and (max-width: 768px) {
+        .top-buyer-banner {
+            top: 95px;
+        }
+
+        .top-buyer-content {
+            font-size: 7px;
+            padding: 4px 0;
+        }
+
+        .top-buyer-stats {
+            margin-right: 15px;
+        }
+    }
+</style>
+
+        <br><br><br>
+        <br><br>
+
+<!-- VIP Chat Section -->
+<section id="vip-chat" class="vip-chat-section">
+    <div class="container">
+        <h2 class="section-title">VIP Chat Lounge</h2>
+        <p class="section-subtitle">Connect with other members in our exclusive chat system</p>
+        
+        <div class="chat-container">
+            <!-- VIP Key Authentication -->
+            <div id="vip-auth" class="vip-auth">
+                <div class="vip-auth-content">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="VIP Access" class="vip-auth-logo">
+                    <h3>VIP Access Required</h3>
+                    <p>Enter your VIP key to join the exclusive chat room</p>
+                    
+                    <div class="vip-auth-form">
+                        <input type="password" id="vip-key" placeholder="Enter your VIP key..." class="vip-input">
+                        <button id="vip-submit" class="btn vip-btn">Verify</button>
+                    </div>
+                    
+                    <div id="vip-auth-error" class="vip-auth-error"></div>
+                    
+                    <p class="vip-auth-info">Don't have a VIP key? <a href="#join-team">Join our team</a> or purchase premium services to receive access.</p>
+                </div>
+            </div>
+            
+            <!-- Chat Interface (Hidden until authenticated) -->
+            <div id="chat-interface" class="chat-interface hidden">
+                <div class="chat-header">
+                    <div class="chat-status">
+                        <span class="status-indicator online"></span>
+                        <span id="online-count">0</span> members online
+                    </div>
+                    <div class="chat-actions">
+                        <button id="refresh-chat" class="btn-small refresh-btn">
+                            <span class="refresh-icon">↻</span>
+                        </button>
+                        <button id="logout-chat" class="btn-small logout-btn">Exit</button>
+                    </div>
+                </div>
+                
+                <div id="chat-messages" class="chat-messages">
+                    <div class="chat-welcome">
+                        <h3>Welcome to the VIP Chat Lounge</h3>
+                        <p>This is the start of the conversation. Be respectful to other members.</p>
+                    </div>
+                    <!-- Messages will be added here by JavaScript -->
+                </div>
+                
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type your message..." class="chat-input">
+                    <button id="send-message" class="btn send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* VIP Chat Section Styles */
+    .vip-chat-section {
+        padding: 80px 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95));
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .vip-chat-section:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), transparent 50%);
+        z-index: 0;
+    }
+    
+    .chat-container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* VIP Authentication */
+    .vip-auth {
+        background: var(--card-bg);
+        border-radius: 10px;
+        border: 1px solid var(--primary-color);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        overflow: hidden;
+        transition: all 0.5s ease;
+    }
+    
+    .vip-auth-content {
+        padding: 30px;
+        text-align: center;
+    }
+    
+    .vip-auth-logo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    }
+    
+    .vip-auth-content h3 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+    
+    .vip-auth-content p {
+        margin-bottom: 20px;
+        opacity: 0.8;
+    }
+    
+    .vip-auth-form {
+        display: flex;
+        margin-bottom: 15px;
+    }
+    
+    .vip-input {
+        flex: 1;
+        padding: 12px 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--primary-dark);
+        border-radius: 5px 0 0 5px;
+        color: var(--text-color);
+        font-family: 'Orbitron', sans-serif;
+        letter-spacing: 1px;
+    }
+    
+    .vip-btn {
+        border-radius: 0 5px 5px 0;
+        padding: 12px 20px;
+        background: var(--primary-color);
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+    
+    .vip-auth-error {
+        color: #ff3333;
+        font-size: 0.9rem;
+        height: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .vip-auth-info {
+        font-size: 0.9rem;
+        opacity: 0.6;
+    }
+    
+    .vip-auth-info a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+    
+    /* Chat Interface */
+    .chat-interface {
+        background: var(--card-bg);
+        border-radius: 10px;
+        border: 1px solid var(--primary-color);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        overflow: hidden;
+        height: 600px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat-header {
+        background: rgba(0, 0, 0, 0.4);
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--primary-dark);
+    }
+    
+    .chat-status {
+        display: flex;
+        align-items: center;
+    }
+    
+    .status-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    
+    .status-indicator.online {
+        background-color: #00ff00;
+        box-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+    }
+    
+    .chat-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .refresh-btn, .logout-btn {
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--primary-dark);
+        border-radius: 5px;
+        color: var(--text-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .refresh-btn:hover, .logout-btn:hover {
+        background: rgba(0, 255, 255, 0.2);
+    }
+    
+    .refresh-icon {
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+    
+    .refresh-btn:hover .refresh-icon {
+        transform: rotate(180deg);
+    }
+    
+    .chat-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .chat-welcome {
+        text-align: center;
+        padding: 20px;
+        background: rgba(0, 255, 255, 0.05);
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .chat-welcome h3 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+    
+    .chat-message {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .message-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    
+    .message-username {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    
+    .message-time {
+        font-size: 0.8rem;
+        opacity: 0.6;
+    }
+    
+    .message-content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px 15px;
+        border-radius: 5px;
+        max-width: 80%;
+        word-break: break-word;
+    }
+    
+    .message-self {
+        align-items: flex-end;
+    }
+    
+    .message-self .message-content {
+        background: rgba(0, 255, 255, 0.1);
+        border-left: 3px solid var(--primary-color);
+    }
+    
+    .message-other .message-content {
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 3px solid #ff9900;
+    }
+    
+    .chat-input-area {
+        padding: 15px;
+        display: flex;
+        background: rgba(0, 0, 0, 0.4);
+        border-top: 1px solid var(--primary-dark);
+    }
+    
+    .chat-input {
+        flex: 1;
+        padding: 12px 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--primary-dark);
+        border-radius: 5px 0 0 5px;
+        color: var(--text-color);
+        font-family: 'Orbitron', sans-serif;
+    }
+    
+    .send-btn {
+        border-radius: 0 5px 5px 0;
+        padding: 12px 20px;
+        background: var(--primary-color);
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    /* Message Types */
+    .system-message {
+        text-align: center;
+        margin: 15px 0;
+        opacity: 0.7;
+        font-style: italic;
+        font-size: 0.9rem;
+    }
+    
+    /* Responsive Styles */
+    @media screen and (max-width: 768px) {
+        .vip-auth-form {
+            flex-direction: column;
+        }
+        
+        .vip-input {
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .vip-btn {
+            border-radius: 5px;
+        }
+        
+        .chat-interface {
+            height: 500px;
+        }
+        
+        .message-content {
+            max-width: 90%;
+        }
+    }
+</style>
+
+<script>
+    // VIP Chat System JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // DOM Elements
+        const vipAuth = document.getElementById('vip-auth');
+        const chatInterface = document.getElementById('chat-interface');
+        const vipKey = document.getElementById('vip-key');
+        const vipSubmit = document.getElementById('vip-submit');
+        const vipAuthError = document.getElementById('vip-auth-error');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendMessage = document.getElementById('send-message');
+        const refreshChat = document.getElementById('refresh-chat');
+        const logoutChat = document.getElementById('logout-chat');
+        const onlineCount = document.getElementById('online-count');
+        
+        // VIP Keys (in a real application, these would be stored securely on a server)
+        const validVipKeys = ['USM2025', 'SHADOWY25', 'UEMVIP'];
+        
+        // Chat Variables
+        let username = '';
+        let chatHistory = [];
+        let onlineUsers = 0;
+        
+        // Check for existing session
+        function checkSession() {
+            const storedKey = localStorage.getItem('vipKey');
+            if (storedKey && validVipKeys.includes(storedKey)) {
+                enterChatRoom();
+            }
+        }
+        
+        // Authenticate VIP Key
+        vipSubmit.addEventListener('click', function() {
+            const key = vipKey.value.trim();
+            
+            if (key === '') {
+                showError('Please enter your VIP key');
+                return;
+            }
+            
+            if (validVipKeys.includes(key)) {
+                // Save VIP key to session
+                localStorage.setItem('vipKey', key);
+                
+                // Generate random username (in a real app, users would register)
+                username = 'User_' + Math.floor(Math.random() * 10000);
+                localStorage.setItem('username', username);
+                
+                enterChatRoom();
+            } else {
+                showError('Invalid VIP key. Please try again.');
+                vipKey.value = '';
+            }
+        });
+        
+        // Enter Chat Room
+        function enterChatRoom() {
+            vipAuth.classList.add('hidden');
+            chatInterface.classList.remove('hidden');
+            
+            // Load chat history (in a real app, this would be from a server)
+            loadChatHistory();
+            
+            // Simulate online users
+            simulateOnlineUsers();
+            
+            // Add system message
+            addSystemMessage('You have joined the chat');
+            scrollToBottom();
+        }
+        
+        // Show Error Message
+        function showError(message) {
+            vipAuthError.textContent = message;
+            setTimeout(() => {
+                vipAuthError.textContent = '';
+            }, 3000);
+        }
+        
+        // Add Message to Chat
+        function addMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = `chat-message message-${message.type}`;
+            
+            if (message.type === 'system') {
+                messageElement.className = 'system-message';
+                messageElement.textContent = message.content;
+            } else {
+                const isCurrentUser = message.username === username;
+                messageElement.className = `chat-message message-${isCurrentUser ? 'self' : 'other'}`;
+                
+                const messageHeader = document.createElement('div');
+                messageHeader.className = 'message-header';
+                
+                const usernameElement = document.createElement('span');
+                usernameElement.className = 'message-username';
+                usernameElement.textContent = isCurrentUser ? 'You' : message.username;
+                
+                const timeElement = document.createElement('span');
+                timeElement.className = 'message-time';
+                timeElement.textContent = message.time;
+                
+                messageHeader.appendChild(usernameElement);
+                messageHeader.appendChild(timeElement);
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                messageContent.textContent = message.content;
+                
+                messageElement.appendChild(messageHeader);
+                messageElement.appendChild(messageContent);
+            }
+            
+            chatMessages.appendChild(messageElement);
+            scrollToBottom();
+            
+            // Save to chat history (in a real app, this would be sent to a server)
+            if (message.type !== 'system') {
+                chatHistory.push(message);
+                saveChatHistory();
+            }
+        }
+        
+        // Add System Message
+        function addSystemMessage(content) {
+            addMessage({
+                type: 'system',
+                content: content
+            });
+        }
+        
+        // Send Message
+        sendMessage.addEventListener('click', sendUserMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        });
+        
+        function sendUserMessage() {
+            const message = chatInput.value.trim();
+            
+            if (message === '') {
+                return;
+            }
+            
+            const now = new Date();
+            const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                              now.getMinutes().toString().padStart(2, '0');
+            
+            addMessage({
+                type: 'user',
+                username: username,
+                content: message,
+                time: timeString
+            });
+            
+            chatInput.value = '';
+            
+            // Simulate response after random delay (in a real app, this would be real users)
+            simulateResponse();
+        }
+        
+        // Simulate Response (in a real app, this would be real users sending messages)
+        function simulateResponse() {
+            // Only simulate responses sometimes
+            if (Math.random() < 0.7) {
+                const botNames = ['ShadowTrader', 'UniHacker', 'CampusGhost', 'ByteMaster', 'StealthScholar'];
+                const responses = [
+                    'Anyone have the CSE301 notes?',
+                    'I just uploaded new lab material for ECE students.',
+                    'How was today\'s surprise quiz?',
+                    'Who\'s going to the hackathon next week?',
+                    'New project tutorials are up on the server.',
+                    'Has anyone taken Professor Kumar\'s class before?',
+                    'I need help with the network assignment.',
+                    'Just shared some rare materials on the drive.',
+                    'The microcontroller project is brutal this semester.',
+                    'Who wants to collaborate on the final project?'
+                ];
+                
+                setTimeout(() => {
+                    const now = new Date();
+                    const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                                      now.getMinutes().toString().padStart(2, '0');
+                    
+                    addMessage({
+                        type: 'user',
+                        username: botNames[Math.floor(Math.random() * botNames.length)],
+                        content: responses[Math.floor(Math.random() * responses.length)],
+                        time: timeString
+                    });
+                }, Math.random() * 5000 + 1000);
+            }
+        }
+        
+        // Load Chat History (in a real app, this would be from a server)
+        function loadChatHistory() {
+            const history = localStorage.getItem('chatHistory');
+            if (history) {
+                chatHistory = JSON.parse(history);
+                
+                // Display last 10 messages
+                const messagesToShow = chatHistory.slice(-10);
+                messagesToShow.forEach(message => {
+                    addMessage(message);
+                });
+                
+                if (chatHistory.length > 10) {
+                    addSystemMessage('Showing the last 10 messages');
+                }
+            } else {
+                // Initialize with welcome messages
+                const welcomeMessages = [
+                    {
+                        type: 'user',
+                        username: 'ShadowAdmin',
+                        content: 'Welcome to the VIP Chat! This is where members can exchange information and resources.',
+                        time: '00:00'
+                    },
+                    {
+                        type: 'user',
+                        username: 'ModeratorX',
+                        content: 'Remember to follow the community guidelines. No sharing of personal information.',
+                        time: '00:01'
+                    }
+                ];
+                
+                welcomeMessages.forEach(message => {
+                    addMessage(message);
+                });
+            }
+        }
+        
+        // Save Chat History (in a real app, this would be to a server)
+        function saveChatHistory() {
+            // Keep only the last 100 messages
+            if (chatHistory.length > 100) {
+                chatHistory = chatHistory.slice(-100);
+            }
+            
+            localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+        }
+        
+        // Simulate Online Users
+        function simulateOnlineUsers() {
+            // Base count of online users (3-8)
+            onlineUsers = Math.floor(Math.random() * 6) + 3;
+            updateOnlineCount();
+            
+            // Randomly change online count
+            setInterval(() => {
+                const change = Math.random() < 0.5 ? 1 : -1;
+                onlineUsers = Math.max(2, Math.min(15, onlineUsers + change));
+                updateOnlineCount();
+                
+                // Sometimes show join/leave messages
+                if (Math.random() < 0.3) {
+                    const names = ['ShadowCoder', 'NightOwl', 'DataDrifter', 'BitHunter', 'CodePhantom'];
+                    const randomName = names[Math.floor(Math.random() * names.length)];
+                    
+                    if (change > 0) {
+                        addSystemMessage(`${randomName} has joined the chat`);
+                    } else {
+                        addSystemMessage(`${randomName} has left the chat`);
+                    }
+                }
+            }, 30000); // Every 30 seconds
+        }
+        
+        // Update Online Count
+        function updateOnlineCount() {
+            onlineCount.textContent = onlineUsers;
+        }
+        
+        // Scroll to Bottom of Chat
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Refresh Chat
+        refreshChat.addEventListener('click', function() {
+            // Visual feedback
+            const icon = refreshChat.querySelector('.refresh-icon');
+            icon.style.transform = 'rotate(180deg)';
+            
+            setTimeout(() => {
+                icon.style.transform = 'rotate(0deg)';
+            }, 500);
+            
+            // Clear and reload chat
+            chatMessages.innerHTML = '';
+            loadChatHistory();
+            
+            addSystemMessage('Chat refreshed');
+        });
+        
+        // Logout
+        logoutChat.addEventListener('click', function() {
+            localStorage.removeItem('vipKey');
+            chatInterface.classList.add('hidden');
+            vipAuth.classList.remove('hidden');
+            vipKey.value = '';
+        });
+        
+        // Check for existing session on load
+        checkSession();
+        
+        // Add an initial system message if there's no chat history
+        if (!localStorage.getItem('chatHistory')) {
+            setTimeout(() => {
+                addSystemMessage('Welcome to the VIP Chat Room');
+            }, 1000);
+        }
+    });
+</script>
+        
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="UEM Shadow Market Logo">
+                        <div class="logo-text">UEM Shadow Market</div>
+                    </div>
+                    <p style="margin-top: 20px; opacity: 0.7;">Your anonymous support system for academic success at UEM Jaipur. We're here to help you excel in your academic journey.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="https://dark-97o.github.io/news.html">News</a></li>
+                        <li><a href="https://dark-97o.github.io/service.html">Services</a></li>
+                        <li><a href="https://dark-97o.github.io/project.html">Projects</a></li>
+                        <li><a href="https://dark-97o.github.io/question.html">Question Bank</a></li>
+                        <li><a href="https://dark-97o.github.io/internship.html">Internships</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="https://forms.google.com/contact">Join Team</a></li>
+                        <li><a href="https://t.me/uemshadowmarket">Telegram Channel</a></li>
+                        <li><a href="https://wa.me/1234567890">WhatsApp</a></li>
+                        <li><a href="mailto:contact@uemshadowmarket.com">Email Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 UEM Shadow Market. All rights reserved. Not affiliated with UEM Jaipur.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">Disclaimer: This website is intended for educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+<style>
+/* Footer Styles with Fixed Padding */
+footer {
+    background-color: #0c0c14;
+    color: #fff;
+    padding: 20px 0 1px;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 1px;
+}
+
+.footer-logo {
+    flex: 1;
+    min-width: 280px;
+    max-width: 400px;
+}
+
+.footer-links {
+    flex: 0 0 auto;
+    min-width: 180px;
+    padding: 0 20px;
+}
+
+.footer-links h4 {
+    color: #0ef;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.footer-links h4:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    height: 2px;
+    width: 30px;
+    background: linear-gradient(90deg, #0ef, transparent);
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    position: relative;
+    padding-left: 15px;
+}
+
+.footer-links ul li a:before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: #0ef;
+}
+
+.footer-links ul li a:hover {
+    opacity: 1;
+    color: #0ef;
+    padding-left: 20px;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.7;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .footer-logo, .footer-links {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+}
+</style>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile Navigation
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.classList.toggle('nav-active');
+            mobileMenu.classList.toggle('toggle');
+        });
+        
+        // Services Tabs
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Create floating cyberpunk-style cubes in background
+        function createCubes() {
+            const background = document.querySelector('.background');
+            const numberOfCubes = 20;
+            
+            for (let i = 0; i < numberOfCubes; i++) {
+                const cube = document.createElement('div');
+                cube.classList.add('cube');
+                
+                // Random size between 30px and 100px
+                const size = Math.random() * 70 + 30;
+                cube.style.width = `${size}px`;
+                cube.style.height = `${size}px`;
+                
+                // Random position
+                cube.style.left = `${Math.random() * 100}vw`;
+                cube.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation duration between 15s and 30s
+                cube.style.animationDuration = `${Math.random() * 15 + 15}s`;
+                
+                // Random animation delay
+                cube.style.animationDelay = `${Math.random() * 5}s`;
+                
+                background.appendChild(cube);
+            }
+        }
+        
+        // Initialize animations
+        createCubes();
+        
+        // Handle scrolling
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html>
